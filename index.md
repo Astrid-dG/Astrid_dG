@@ -4,7 +4,7 @@
 
 ### Projects
 
-[Tuberculosis Rates around the World for the Last Two Decades](/https://rpubs.com/AstridChristyne/1101876)
+[Tuberculosis Rates around the World for the Last Two Decades](https://rpubs.com/AstridChristyne/1101876)
 <img src="Projects/TBHIVrate/TBHIVLE.png?raw=true"/>
 
 ---
