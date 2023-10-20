@@ -9,6 +9,6 @@
 
 ---
 [AB testing of streaming service Why Not Watch](/Projects/Streaming_ABtest/ABtestR.pdf)
-<img src="Projects/Streaming_ABtest/ABhrsWatched.png?raw=true"/>
+<img src="Projects/Streaming_ABtest/ABhrsWatched.png?raw=true"/> 
 
 ---
