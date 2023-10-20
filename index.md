@@ -23,7 +23,7 @@ resistant strains and HIV prevalence.
 <img src="Projects/Streaming_ABtest/ABhrsWatched.png?raw=true"/> 
 
 
-An analysis of AB tesitng data provided by a streaming company, I worked around the limitations in data
+An analysis of AB testing data provided by a streaming company, I worked around the limitations in data
 and ensured the results were statistically significant.
 
 
