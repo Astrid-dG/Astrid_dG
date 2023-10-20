@@ -8,7 +8,7 @@
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
-[AB testing of streaming service Why Not Watch](/Projects/Streaming_ABtest/ABtestR.pdf)
+[AB testing of streaming service Why Not Watch](Projects/Streaming_ABtest/ABtestingR.pdf)
 <img src="Projects/Streaming_ABtest/ABhrsWatched.png?raw=true"/> 
 
 ---
