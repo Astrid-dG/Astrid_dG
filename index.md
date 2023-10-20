@@ -11,7 +11,8 @@ A project looking at changing Tuberculosis rates around the world with some driv
 resistant strains and HIV prevalence. 
 
 
-[![View on GitHub](https://img.shields.io/badge/View_on_Rpubs-blue?logo=GitHub)](https://rpubs.com/AstridChristyne/1101876/)
+[![View on Rpubs](https://img.shields.io/badge/View_on_Rpubs-blue)](https://rpubs.com/AstridChristyne/1101876/)
+
 
 
 ---
