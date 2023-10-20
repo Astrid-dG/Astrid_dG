@@ -4,8 +4,8 @@
 
 ### Projects
 
-[Project 1 Title](/sample_page)
-<img src="images/dummy_thumbnail.jpg?raw=true"/>
+[Tuberculosis Rates around the World for the Last Two Decades](/https://rpubs.com/AstridChristyne/1101876)
+<img src="Projects/TBHIVrate/TBHIVLE.png?raw=true"/>
 
 ---
 [AB testing of streaming service Why Not Watch](Projects/Streaming_ABtest/ABtestingR.pdf)
