@@ -27,7 +27,7 @@ emergence of resistant TB strains provides a challenge in tackling this global h
 [AB Testing of Streaming Service Why Not Watch](Projects/Streaming_ABtest/ABtestingR.pdf)
 <img src="Projects/Streaming_ABtest/ABhrsWatched.png?raw=true"/> 
 
-An analysis of AB testing data provided by a fictional streaming company, I worked around the limitations in data
+An analysis of AB testing of streaming company data, I worked around the limitations in data
 and ensured the results were statistically significant. The data provided included control group data prior 
 to AB test which was excluded to not bias the results as shown in the graph above. The intervention group 
 increased their watch time by 30 minutes daily on average for the duration of the trial. 
