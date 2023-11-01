@@ -9,11 +9,11 @@
 
 A project looking at changing Tuberculosis (TB) rates around the world with some drivers of change such as 
 resistant strains and HIV. The incidence of TB has reduced over the last two decades, this
-is also associated with changes in higher life expentancy and reduced HIV prevalence. However the further
+is also associated with changes in higher life expectancy and reduced HIV prevalence. However the further
 emergence of resistant TB strains provides a challenge in tackling this global health problem going forward. 
 
 
-[Link to interactive graphs](https://rpubs.com/AstridChristyne/1101876)
+[Link to interactive graphs](https://rpubs.com/AstridChristyne/1071153)
 
 
 [![View on Rpubs](https://img.shields.io/badge/Rpubs-View_on_Rpubs-blue?logo=R&labelColor=grey)](https://rpubs.com/AstridChristyne/1101876/)
