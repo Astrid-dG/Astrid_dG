@@ -36,7 +36,7 @@ increased their watch time by 30 minutes daily on average for the duration of th
 [Link to presentation slides](Projects/Streaming_ABtest/ABtestingR.pdf)
 
 
-[![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](Projects/Streaming_ABtest/ABtestingR.pdf/)
+[![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](Projects/Streaming_ABtest/)
 
 
 ---
