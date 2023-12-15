@@ -1,0 +1,302 @@
+---
+title: "Tuberculosis rates around the world for the last two decades"
+author: "Astrid"
+date: "2023-08-11"
+always_allow_html: true
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    df_print: paged
+    toc: yes
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+```
+
+
+
+```{r Import Packages, echo=TRUE, message=FALSE}
+library(readr) # to import data
+library(readxl) #to import excel file
+library(dplyr) # to work with data
+library(tidyr) # to change data formats
+library(lubridate) #to work with date and time
+library(magrittr) # to use pipes
+library(ggplot2) # for graphs
+library(plotly) # for visualisations
+library(gapminder) # to import gdp data
+
+```
+
+
+```{r Import data set, echo=TRUE}
+TBdata <- read_csv("../Data/TB and development data.csv")
+Meta <- read_excel("../Data/Metadata.xlsx", 
+    sheet = "Country - Metadata")
+WHOTB <- read_csv("../Data/MDR_RR_TB_burden_estimates_2023-08-13.csv")
+
+head(TBdata)
+head(Meta)
+head(WHOTB)
+```
+
+```{r tidy graph TB, echo=TRUE}
+TBdata <- head(TBdata, -2) #remove bottom rows
+
+TBdata <- TBdata[!is.na(TBdata$`Series Name`), ] #remove empty series names
+
+names(TBdata) <- gsub("\\[.*?\\]", "", names(TBdata)) # remove [] from year columns
+
+#change missing data to NA
+TBdata[TBdata == '..'] <- NA
+
+#Update column names
+TBdata <- TBdata %>%
+  mutate(`Series Name` = case_when(
+    `Series Name` == "Incidence of tuberculosis (per 100,000 people)" ~ "TBincidence",
+    `Series Name` == "Current health expenditure per capita (current US$)" ~ "Health_expenditure",
+    `Series Name` == "GDP per capita (current US$)" ~ "GDPperCap",
+    `Series Name` == "Life expectancy at birth, total (years)" ~ "Life_expectancy",
+    `Series Name` == "Incidence of HIV, ages 15-49 (per 1,000 uninfected population ages 15-49)" ~ "HIVprevalence",
+    TRUE ~ `Series Name` # Keep other values as they are
+  ))
+
+```
+
+
+
+
+
+
+```{r Pivot Graph, echo=TRUE}
+TBdata <- TBdata%>%
+  rename(country= `Country Name`)
+
+TBdata <- TBdata %>% #pivot longer
+  pivot_longer(cols = 5:25, names_to = "year", values_to = "value")
+
+TBdata <- TBdata %>% #pivot wider
+  pivot_wider(names_from = `Series Name`, values_from = value,
+              id_cols = c(country, year))
+
+
+```
+
+```{r Tidy metadata, echo=TRUE}
+Meta <- Meta %>%
+  select(`Table Name`, Region, `Income Group`, Code) %>%
+  rename(
+    country = `Table Name`,
+    Income = `Income Group`
+  )
+
+TBdata <- inner_join(TBdata, Meta, by = "country")
+
+```
+
+```{r Fix up WHOTB data set, echo=TRUE}
+WHOTB <- WHOTB %>%
+  select(iso3, year, e_rr_pct_new) %>%
+  rename(
+    Code = iso3,
+    ResisTB = e_rr_pct_new) 
+
+# Convert year column in TBdata to numeric 
+TBdata <- TBdata %>%
+  mutate(year = as.numeric(year))
+
+TBdata <- TBdata %>%
+  mutate(TBincidence = as.numeric(TBincidence))
+
+# Convert year column in WHOTB to numeric as well
+WHOTB <- WHOTB %>%
+  mutate(year = as.numeric(year))
+
+WHOTB <- WHOTB %>%
+  mutate(ResisTB = as.numeric(ResisTB))
+
+# join
+WHOTB <- WHOTB %>%
+  inner_join(TBdata, by = c("Code", "year"))
+
+WHOTB <- WHOTB %>%
+  mutate(HIVprevalence = as.numeric(HIVprevalence))
+
+```
+
+```{r Fix up TB incidence, echo=TRUE}
+#Find and delete data on NA if greater than 10 
+TBdata <- TBdata %>%
+  group_by(country) %>%
+  mutate(NA_count = sum(is.na(TBincidence))) %>%
+  filter(NA_count < 10) %>%
+  select(-NA_count)
+
+#change to numeric
+TBdata <- TBdata %>%
+  mutate(
+    year = as.numeric(year),
+    TBincidence = as.numeric(TBincidence),
+    GDPperCap = round(as.numeric(GDPperCap), 2),
+    Health_expenditure = round(as.numeric(Health_expenditure), 2),
+    Life_expectancy = round(as.numeric(Life_expectancy), 2),
+    HIVprevalence = as.numeric(HIVprevalence))
+
+#Fill in missing data          
+TBdata <- TBdata %>%
+  mutate(year = as.numeric(year)) %>%
+  group_by(country) %>%
+  complete(year = min(year):max(year)) %>%
+  fill(TBincidence, .direction = "downup")
+
+sum(is.na(TBdata$TBincidence))
+
+NATB <- TBdata[is.na(TBdata$TBincidence), "country"]
+
+```
+
+```{r Fix up Life expectancy, echo=TRUE}
+NALE <- TBdata[is.na(TBdata$Life_expectancy), "country"]
+
+TBLdata <- TBdata %>%
+  group_by(country) %>%
+  filter(!any(is.na(Life_expectancy))) %>%
+  ungroup()
+
+
+NAHIV <- TBdata[is.na(TBdata$HIVprevalence), "country"]
+
+```
+
+#### Tuberculosis Worldwide
+
+```{r echo=TRUE, warning=FALSE}
+
+plot_ly(data = TBLdata, ids = ~Code, frame = ~year) %>%
+  add_trace(
+    z = ~TBincidence,
+    zmin = min(TBLdata$TBincidence), # set minimum value
+    zmax = max(TBLdata$TBincidence), # set maximum value
+    locations = ~Code,
+    type = 'choropleth',
+    colorscale = list(c(0, "white"), c(1, "darkblue"))
+  ) %>%
+  layout(
+    title = "Global Tuberculosis Incidence Rates Over Time per 100,000 people",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = FALSE,
+      projection = list(type = 'equirectangular')
+    ),
+    autosize = TRUE
+  ) %>%
+  animation_opts(frame = 100, redraw = TRUE) %>%
+  animation_slider(currentvalue = list(prefix = "Year: "))
+
+
+
+```
+
+Reference
+
+The World Bank (2023) *Incidence of tuberculosis (per 100,000 people)*, The World Bank website, accessed 10 August 2023.
+https://databank.worldbank.org/reports.aspx?dsid=2&series=SH.TBS.INCD
+
+
+
+
+#### Tuberculosis vs Life Expectancy and HIV prevalence
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+pTB2year <- plot_ly(data = TBLdata, x = ~Life_expectancy, y = ~TBincidence,
+             text = ~country, 
+             size = ~HIVprevalence, 
+             color = ~Region, 
+             frame = ~year,
+             ids = ~country, alpha = 1) %>% 
+  add_trace(type = "scatter", mode = "markers", 
+            marker = list(sizemode = "diameter", sizemin = 3, sizeref = 3, 
+              sizemax = 15)) %>% 
+  layout(title = list(text = "Incidence of Tuberculosis by Year compared with Life Expentancy and HIV Prevalence World Wide", font = list(size = 12)), # 
+         yaxis = list(
+           zeroline = FALSE, 
+           showgrid = FALSE, 
+           title = list(text = "Incidence of Tuberculosis", font = list(size = 10)), 
+           tickfont = list(size = 8) # Reduce y-axis tick label font size
+         ),
+         xaxis = list(
+           zeroline = FALSE, 
+           showgrid = FALSE, 
+           title = list(text = "Life Expentancy", font = list(size = 10)), 
+           tickfont = list(size = 8) # Reduce x-axis tick label font size
+         ),
+         showlegend = TRUE, 
+         legend = list(title = list(text = 'Region (Size is prevalence of HIV)'),
+                       font = list(size = 8)))
+
+
+
+pTB2year
+```
+
+Reference
+
+The World Bank (2023) *Incidence of tuberculosis (per 100,000 people)*, The World Bank website, accessed 10 August 2023.
+https://databank.worldbank.org/reports.aspx?dsid=2&series=SH.TBS.INCD
+
+
+
+#### New Rifampicin Resistance Infections in Europe 
+```{r echo=TRUE, warning=FALSE}
+
+WHOTB <- WHOTB %>%
+  group_by(country) %>%
+  filter((Region %in% c("Europe & Central Asia"))) %>%
+  ungroup()
+
+WHOTB <- WHOTB %>%
+  group_by(country) %>%
+  filter(!(Income %in% c("High income"))) %>%
+  ungroup()
+
+
+
+pWHO <- plot_ly(data = WHOTB, y = ~reorder(country, -TBincidence), frame = ~year) %>%
+  add_trace(x = ~ResisTB, type = "bar", name = "Resistant Cases") %>%
+    layout(
+    title = list(text = "Percentage of New Rifamipicin Resistant Cases for Lower Income Countries in Europe and Central Asia", font = list(size = 12)),
+    xaxis = list(
+      title = list(text = "Percentage of Cases", font = list(size = 10)),
+      showgrid = FALSE,
+      tickfont = list(size = 8) 
+    ),
+    yaxis = list(
+      title = list(text = "Country", font = list(size = 10)),
+      title_standoff = 100,
+      tickfont = list(size = 8) 
+    ),
+    barmode = 'stack',
+    showlegend = TRUE,
+    orientation = 'h',
+    margin = list(l = 100), 
+    legend = list(font = list(size = 6))
+  ) %>%
+  animation_opts(frame = 200, redraw = TRUE) %>% 
+  animation_slider(currentvalue = list(prefix = "Year: "))
+
+
+
+
+
+
+pWHO
+
+```
+Reference
+
+World Health Organization (2022) *Tuberculosis data*, World Health Organization website, accessed 10 August 2023. https://www.who.int/teams/global-tuberculosis-programme/data
+
+
