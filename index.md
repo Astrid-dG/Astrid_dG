@@ -32,7 +32,7 @@ be the best fit for predicting high performing shares. It had good overall accur
 better precision (0.76) as there were 7 false positives in the model. Its AUC was much higher than the other models, suggesting it is less prone to overfitting.
 
 
-[Link to presentation slides](Projects/FinanceRussell3000index/Hedgefund investment.pdf)
+[Link to presentation slides](Projects/FinanceRussell3000index/HedgefundInvestment.pdf)
 
 
 [Link to Python code](https://github.com/Astrid-dG/astrid-dg.github.io/tree/master/Projects/FinanceRussell3000index)
