@@ -32,7 +32,7 @@ to AB test which was excluded to not bias the results as shown in the graph abov
 increased their watch time by 30 minutes daily on average for the duration of the trial. 
 
 
-[Link to presentation slides](Projects/Streaming_ABtest/ABtestingR.pdf)
+[Link to presentation slides](Projects/Streaming_ABtest/whynotwatchpres.pdf)
 
 
 [Link to code](Projects/Streaming_ABtest/ABtestingR.pdf)
