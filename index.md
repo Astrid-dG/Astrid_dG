@@ -31,7 +31,7 @@ emergence of resistant TB strains provides a challenge in tackling this global h
 The application of machine learning to forecast US stock performance for profitable investments prior to the pandemic is examined in this project using the 
 Russell 3000 Index as it contains 98 percent of the US market that is open for investment. The Random Forest model with refined parameters would 
 be the best fit for predicting high performing shares. It had good overall accuracy with a score of 0.87, but could have had 
-better precision (0.76) as there were 7 false positives in the model. Its AUC was much higher than the other models, suggesting it is less prone to overfitting.
+better precision (0.76). 
 
 
 [Link to presentation slides](Projects/FinanceRussell3000index/HedgefundInvestment.pdf)
