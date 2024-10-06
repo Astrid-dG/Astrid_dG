@@ -16,7 +16,7 @@ emergence of resistant TB strains provides a challenge in tackling this global h
 [Link to interactive graphs](https://rpubs.com/AstridChristyne/1071153)
 
 
-[Link to code](https://rpubs.com/AstridChristyne/1101876/)
+[Link to R code](https://rpubs.com/AstridChristyne/1101876/)
 
 
 
@@ -35,7 +35,7 @@ increased their watch time by 30 minutes daily on average for the duration of th
 [Link to presentation slides](Projects/Streaming_ABtest/whynotwatchpres.pdf)
 
 
-[Link to code](Projects/Streaming_ABtest/ABtestingR.pdf)
+[Link to R code](Projects/Streaming_ABtest/ABtestingR.pdf)
 
 
 
