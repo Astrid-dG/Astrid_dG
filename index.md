@@ -23,8 +23,8 @@ emergence of resistant TB strains provides a challenge in tackling this global h
 ---
 
 
-[Analysis of Share Growth for Russell 3000 Prior to the Pandemic](Projects/FinanceRussell3000index/Assignment Data Modelling finance.ipynb)
-<img src="Projects/FinanceRussell3000index/AUC.pngraw=true"/>
+[Analysis of Share Growth for Russell 3000 Prior to the Pandemic](Projects/FinanceRussell3000index/DataModellingFinance.ipynb)
+<img src="Projects/FinanceRussell3000index/AUC.png?raw=true"/>
 
 The application of machine learning to forecast US stock performance for profitable investments prior to the pandemic is examined in this project using the 
 Russell 3000 Index as it contains 98 percent of the US market that is open for investment. The Random Forest model with refined parameters would 
@@ -32,7 +32,7 @@ be the best fit for predicting high performing shares. It had good overall accur
 better precision (0.76) as there were 7 false positives in the model. Its AUC was much higher than the other models, suggesting it is less prone to overfitting.
 
 
-[Link to presentation slides](Projects/FinanceRussell3000index/Hedgefund investment .pdf)
+[Link to presentation slides](Projects/FinanceRussell3000index/Hedgefund investment.pdf)
 
 
 [Link to Python code](https://github.com/Astrid-dG/astrid-dg.github.io/tree/master/Projects/FinanceRussell3000index)
