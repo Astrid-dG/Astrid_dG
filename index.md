@@ -5,6 +5,7 @@
 ### Projects
 
 [Tuberculosis Rates around the World for the Last Two Decades](https://rpubs.com/AstridChristyne/1101876)
+
 <img src="Projects/TBHIVrate/TBHIVLE.png?raw=true"/>
 
 A project looking at changing Tuberculosis (TB) rates around the world with some drivers of change such as 
@@ -45,6 +46,7 @@ better precision (0.76) as there were 7 false positives in the model. Its AUC wa
 
 
 [AB Testing of Streaming Service Why Not Watch](Projects/Streaming_ABtest/ABtestingR.pdf)
+
 <img src="Projects/Streaming_ABtest/ABhrsWatched.png?raw=true"/> 
 
 An analysis of AB testing of streaming company data, I worked around the limitations in data
